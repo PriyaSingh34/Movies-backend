@@ -59,4 +59,28 @@ router.post("/favorite", async (req, res) => {
   }
 });
 
+router.delete('/favorite/:_id',async (req, res) => {
+  try {
+    const { _id } = req.params;
+
+    const data = await Favorite.findOneAndDelete({ _id: _id });
+    console.log(data);
+
+    return res.status(200).json({
+      message: "Favorite Deleted successfully",
+      status: 200,
+      data: data,
+    });
+
+    // return res.send(data)
+  } catch (error) {
+    console.log("error", error.message);
+    return res.status(503).json({
+      message: "something went wrong!",
+      status: 503,
+      data: {},
+    });
+  }
+})
+
 module.exports = router;
